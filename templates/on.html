@@ -11,7 +11,7 @@
     <p>Drag the slider to adjust the spraying angle.</p>
     <!-- Here follows the python code to control the slider-->
 
-    <form action="/" method="post">
+    <form action="/on" method="post">
         <input type="range" min="-90" max="90" value="0" class="slider" id="myRange" name="val">
         <p>Angle: <span id="Angle"></span></p>
         <script>
@@ -23,20 +23,16 @@
             }
         </script>
         <button type="submit" id="submit">Update</button>
-
     </form>
 
     <h2>Spray System Switch</h2>
 
-    <form action="/on">
+    <form action="/">
         <label class="switch">
-            <input type="checkbox" name="Checkbox"  onclick="submit()" ; />
+            <input type="checkbox" name="Checkbox" checked="True" onclick="submit()" ; />
             <span class="slider round "></span>
         </label>
 
     </form>
-
-
-
 </body>
 </html>
