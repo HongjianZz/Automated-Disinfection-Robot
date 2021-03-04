@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>User Interface </title>
+  </head>
+  <body>
+    <h1></h1>
+    <img src="{{ url_for('video_feed') }}">
+
+     <p>Drag the slider to adjust the spraying angle.</p>
+    <!-- Here follows the python code to control the slider-->
+
+    <form action="/" method="post">
+        <input type="range" min="-90" max="90" value="0" class="slider" id="myRange" name="val">
+        <p>Angle: <span id="Angle"></span></p>
+        <script>
+            var display = document.getElementById("myRange");
+            var angDis = document.getElementById("Angle");
+            angDis.innerHTML = display.value;
+            display.oninput = function () {
+                angDis.innerHTML = this.value;
+            }
+        </script>
+        <button type="submit" id="submit">Update</button>
+
+    </form>
+
+    <h2>Spray System Switch</h2>
+
+    <form action="/on">
+        <label class="switch">
+            <input type="checkbox" name="Checkbox"  onclick="submit()" ; />
+            <span class="slider round "></span>
+        </label>
+
+    </form>
+        </body>
+</html>
