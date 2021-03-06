@@ -1,15 +1,13 @@
 import RPi.GPIO as GPIO
 from flask import Flask, render_template, Response, request
 from mycamera import VideoCamera
-from time import sleep
+import time
+import serial
 
 pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
-
+initi = 0
+userValue = 0
 app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 def gen(camera):
     #get camera frame
@@ -25,9 +23,11 @@ def video_feed():
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+    global initi
+    global userValue
     TES_pin = 26
     if request.method == "POST":
-        print("has posted")
+        initi = 0
         userValue = request.form["val"]  # get the value of val from html file and store as str
         print("Please Turn On the Device First")
         return render_template("index.html")  # turn On switch
@@ -36,6 +36,7 @@ def home():
         GPIO.setup(TES_pin, GPIO.OUT)
         GPIO.output(TES_pin, GPIO.LOW)
         print("Pump Off")
+        initi = 0
         return render_template("index.html")  # nothing happen
 
     # Spray Power ON
@@ -43,19 +44,27 @@ def home():
 
 @app.route('/on', methods=["GET", "POST"])
 def on():
-    RelayControl = 26
-    print("Three")
-    if request.method == "POST":
+    global initi
+    global userValue
+    if  initi == 0:
+        RelayControl = 26
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(RelayControl, GPIO.OUT)
+        GPIO.output(RelayControl, GPIO.HIGH)
+        initi = 1
+        return render_template('on.html')
+
+    elif request.method == "POST":
         userValue = request.form["val"]  # get the value of val from html file and store as str
         print(userValue)
         SMotor_Control(userValue)
         return render_template('on.html')
-    else:
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(RelayControl, GPIO.OUT)
-        GPIO.output(RelayControl, GPIO.HIGH)
 
-        return render_template('on.html')
+    elif request.method == "GET":
+        print("Get")
+        Data = WaterLevelRead()
+        return render_template('on.html',data=Data)
+
 
 
 def SMotor_Control(degree):
@@ -81,9 +90,17 @@ def SetAngle(angle):
     duty = 12 - (angle1 / 180) * 10
     result = int(duty)
     print(duty)
-    print('Result')
     print(result)
     return result
+
+def WaterLevelRead():
+    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+    ser.flush()
+    time.sleep(1)
+    Line = ser.readline().decode('utf-8').rstrip()
+    print(Line)
+    ser.close()
+    return Line
 
 
 if __name__ == '__main__':
