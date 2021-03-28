@@ -17,7 +17,7 @@ def getLaneCurve(frame, display=2):
 
     points = [(128, 159), (wT-100, 80), (16, 240), (wT-20, 200)]
     # USE TO TWEAK THE WARPING -->
-    initialTrackBarValues = [119,168,77,240]
+    initialTrackBarValues = [124,141,20,240]
     utils.initializeTrackbars(initialTrackBarValues)
     points = utils.valTrackbars()
     frameWarp = utils.warpImg(frameThres, points, wT, hT)

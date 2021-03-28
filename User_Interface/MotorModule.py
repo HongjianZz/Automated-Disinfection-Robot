@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 from time import sleep
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
+# 
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setwarnings(False)
 
 class Motor():
     def __init__(self, En1,En2,En3,En4):
@@ -11,6 +11,8 @@ class Motor():
         self.En3 = En3 # left side
         self.En4 = En4 # left side
 
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.setup(self.En1,GPIO.OUT)
         GPIO.setup(self.En2,GPIO.OUT)
         GPIO.setup(self.En3,GPIO.OUT)
@@ -45,6 +47,12 @@ class Motor():
          self.pwm4.ChangeDutyCycle(leftSpeed)
          self.pwm2.ChangeDutyCycle(rightSpeed)
          sleep(t)
+         
+    def stop(self,speed = 0, turn = 0, t = 0):
+        self.pwm3.ChangeDutyCycle(0)
+        self.pwm1.ChangeDutyCycle(0)
+        self.pwm2.ChangeDutyCycle(0)
+        self.pwm4.ChangeDutyCycle(0)
 
 if __name__ == '__main__':
     motor1 = Motor(13,19,16,20)

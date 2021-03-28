@@ -3,7 +3,7 @@ import numpy as np
 
 def thresholding(frame):
     imgHsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-    lowerWhite = np.array([0, 0, 71]) # Adjust with ColorPickerScript.py
+    lowerWhite = np.array([0, 0, 118]) # Adjust with ColorPickerScript.py
     upperWhite = np.array([179,  255, 225]) # Adjust with ColorPickerScript.py
     maskWhite = cv2.inRange(imgHsv, lowerWhite, upperWhite)
     return maskWhite
