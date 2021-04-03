@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
+<style>
+    .p1 {
+        font-family: "system-ui"
+    }
+
+    .p2 {
+        font-family: "Trebuchet MS", Helvetica, sans-serif
+    }
+</style>
 <head>
-    <title>Page Title</title>
-    <h1>Spraying System Template 1.0</h1>
-    <p>This is a template for the spraying system applicatioin</p>
+    <h1 class="p2" style="text-align:center;background-color:DodgerBlue;color:white;">Automated Disinfection Robot beta</h1>
+    <h2 class="p1" style ="text-align:center">Designed and Engineered by Group 2</h2>
 
 </head>
 
 <body>
 
-    <p>Drag the slider to adjust the spraying angle.</p>
+    <p style="text-align:center">Drag the slider to adjust the spraying angle</p>
     <!-- Here follows the python code to control the slider-->
 
-    <form action="/on" method="post">
-        <input type="range" min="-90" max="90" value="0" class="slider" id="myRange" name="val">
-        <p>Angle: <span id="Angle"></span></p>
+    <form action="/on" method="post" style="text-align:center">
+        <input type="range" min="-90" max="90" value="0" class="slider" id="myRange" name="val" style="text-align:center">
+        <p >Angle: <span id="Angle"></span></p>
         <script>
             var display = document.getElementById("myRange");
             var angDis = document.getElementById("Angle");
@@ -27,14 +35,14 @@
     </form>
 
     <form action="/on" method="get">
-        <h1>Water Level %</h1>
-        <p>{{data}}</p>
+        <h2 class ="p2" style="text-align:center">Water Level %</h2>
+        <p style="text-align:center">{{data}}</pstyle="text-align:center">
         <button type="submit">Check</button>
     </form>
 
-    <h2>Spray System Switch</h2>
+    <h2 class ="p2" style="text-align:center">Spray System Switch</h2>
 
-    <form action="/">
+    <form action="/" style="text-align:center">
         <label class="switch">
             <input type="checkbox" name="Checkbox" checked="True" onclick="submit()" ; />
             <span class="slider round "></span>
